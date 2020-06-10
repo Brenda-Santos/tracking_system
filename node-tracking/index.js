@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const TrackingCorreios = require('tracking-correios');
 const app = express ();
 app.use(cors());
 
@@ -9,7 +10,14 @@ app.get('/', (req, res) =>{
 
     const{ tracking } = req.query;
 
-    res.json({message: 'ok', tracking});
+    TrackingCorreios.track(tracking)
+        .then((result)=>{
+            res.json({message: 'ok', tracking, result});
+        })
+        .catch((error)=>{
+            res.json({message: 'error', error});
+        });
+OH910759118BR
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
