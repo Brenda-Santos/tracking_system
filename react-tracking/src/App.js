@@ -1,6 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
+
+import TrackingEvents from './components/TrackingEvents';
 
 function App() {
+
+  const [events, setEvents] = useState([]);
+  console.log(events);
 
   const submitHandler =(event) => {
     event.preventDefault();
@@ -10,7 +15,10 @@ function App() {
     
     fetch(`http://localhost:3001/?tracking=${data.tracking}`)
       .then(response => response.json())
-      .then(console.log)
+      .then(data => {
+        const events = data.events || [];
+        setEvents(events);
+      })
       .catch(console.error);
   };
 
@@ -22,8 +30,11 @@ function App() {
         <div className="form-group">
           <input type="text" name="tracking" className="form-control" />
         </div>
-        <button type="submit" className="btn btn-primary"> Track</button>
+        <button type="submit" className="btn btn-primary">Rastrear</button>
       </form>
+
+      <TrackingEvents events={events} />
+
     </div>
   );
 }
