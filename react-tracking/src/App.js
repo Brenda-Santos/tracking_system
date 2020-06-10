@@ -8,7 +8,7 @@ function App() {
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
     
-    fetch(`http://localhost:3001/tracking=${data.tracking}`)
+    fetch(`http://localhost:3001/?tracking=${data.tracking}`)
       .then(response => response.json())
       .then(console.log)
       .catch(console.error);
